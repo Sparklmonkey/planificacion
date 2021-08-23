@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Fundamentacion</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+	
+</head>
+<body>
+	<form action="/action_page.php">
+	<table>
+		<tr>
+			<td><label><strong>Fecha:</strong></label></td>	
+			<td><input type="date"></input></td>
+		</tr>
+		<tr>
+			<td><strong>Estudiante Magisterial:</strong></td>	
+			<td><input type="text"></input></td>
+		</tr>
+		<tr>
+			<td><strong>Maestro Adscriptor:</strong></td>	
+			<td><input type="text"></input></td>
+		</tr>
+		<tr>
+			<td><strong>Clase:</strong></td>	
+			<td><input type="text"></input></td>
+		</tr>
+		<tr>
+			<td><strong>Actividad:</strong></td>	
+			<td><input type="number"></input></td>
+		</tr>
+
+		<tr>
+			<td><label><strong>Área del conocimiento:</strong></label></td>	
+			<td>
+			  <select name="area" id="area" onchange="UpdateCampoList()">
+			    <option value="Lengua">Lengua</option>
+			    <option value="Matemático">Matemático</option>
+			    <option value="Artístico">Artístico</option>
+			    <option value="Naturaleza">Naturaleza</option>
+			    <option value="Social">Social</option>
+			  </select>
+			</td>
+		</tr>
+
+		<tr>
+			<td><label><strong>Campo del conocimiento:</strong></label></td>	
+			<td>
+				<div id="campo">
+			  <!--<select name="campo" id="campo" onchange="UpdateContenidos()">
+			    <option value="Lengua">Lengua</option>
+			    <option value="Matemático">Matemático</option>
+			    <option value="Artístico">Artístico</option>
+			    <option value="Naturaleza">Naturaleza</option>
+			    <option value="Social">Social</option>
+			  </select> 
+			  !-->
+			</div>
+			</td>
+		</tr>
+		<tr>
+			<td><label><strong>Contenido:</strong></label></td>
+			<td>
+				<div id="Contenido">
+					
+				</div>
+			</td>
+		</tr>
+  <input type="submit" value="Submit">
+	</form>
+	</table>
+
+	<script type="text/javascript">
+		function UpdateCampoList() {
+			var area = document.getElementById('area').value;
+			console.log(area);
+				var newCampo = "<select name='campo' id='campo-select' onchange='UpdateContenidos()'> <option value=''>Campo...</option>"
+			if(area == "Lengua"){
+				camposDeLengua.forEach(function callbackFn(element) { 
+					newCampo += "<option value='" + element + "'>" + element + "</option>"
+               })
+			}else if(area == "Matemático"){
+				camposDeMatematico.forEach(function callbackFn(element) { 
+					newCampo += "<option value='" + element + "'>" + element + "</option>"
+               })
+			}else if(area == "Artístico"){
+				camposDeArtistico.forEach(function callbackFn(element) { 
+					newCampo += "<option value='" + element + "'>" + element + "</option>"
+               })
+			}else if(area == "Naturaleza"){
+				camposDeNaturaleza.forEach(function callbackFn(element) { 
+					newCampo += "<option value='" + element + "'>" + element + "</option>"
+               })
+			}else{
+				camposDeSocial.forEach(function callbackFn(element) { 
+					newCampo += "<option value='" + element + "'>" + element + "</option>"
+               })
+			}
+				newCampo += "</select>"
+              document.getElementById("campo").innerHTML = newCampo;
+              SetSelectize();
+		}
+		var camposDeLengua = ["Escritura", "Oralidad", "Lectura"];
+		var camposDeMatematico = ["Numeración natural", "Numeración racional", "Geometría", "Álgebra: Contexto numérico", "Álgebra: Contexto geométrico"];
+		var camposDeArtistico = ["Expresión Corporal", "Música", "Artes visuales"];
+		var camposDeNaturaleza = ["Astronomía", "Biología", "Física", "Geología", "Química"];
+		var camposDeSocial = ["Historia", "Geografía", "Construcción de ciudadanía: Ética", "Construcción de ciudadanía: Derecho"];
+
+
+		function UpdateContenidos(){
+			var campo = document.getElementById('campo-select').value;
+			console.log(campo);
+				var newContenido = "<select id='select-contenido' placeholder='Contenido...''> <option value=''>Contenido...</option>"
+			if(campo == "Oralidad"){
+				contenidosOralidad.forEach(function callbackFn(element) { 
+					newContenido += "<option value='" + element + "'>" + element + "</option>"
+               })
+			}else if(campo == "Historia"){
+				contenidosHistoria.forEach(function callbackFn(element) { 
+					newContenido += "<option value='" + element + "'>" + element + "</option>"
+               })
+			}else if(campo == "Geografía"){
+				contenidosGeografia.forEach(function callbackFn(element) { 
+					newContenido += "<option value='" + element + "'>" + element + "</option>"
+               })
+			}else if(campo == "Construcción de ciudadanía: Ética"){
+				contenidosEtica.forEach(function callbackFn(element) { 
+					newContenido += "<option value='" + element + "'>" + element + "</option>"
+               })
+			}else{
+				contenidosDerecho.forEach(function callbackFn(element) { 
+					newContenido += "<option value='" + element + "'>" + element + "</option>"
+               })
+			}
+				newContenido += "</select>"
+              document.getElementById("Contenido").innerHTML = newContenido;
+		SetSelectize();
+		}
+	function SetSelectize() {
+      $('select').selectize({
+          sortField: 'text'
+      });
+  }
+		var contenidosOralidad = ["El diálogo de los personajes de cuentos, historietas y dibujos animados.", 
+									"Las diferencias en la organización de narraciones planificadas y no planificadas.",
+									"La sílaba tónica. Palabras tónicas y átonas. El diptongo.", 
+									"La jerarquización y ejemplificación de la información en la exposición oral.",
+									"El argumento pertinente y no pertinente al tema, la situación y el interlocutor."];
+
+		var contenidosHistoria = ["Las identidades regionales y su evolución.", 
+									"La dominación y la resistencia: la conquista y la colonización en la Cuenca del Plata.",
+									"Los grupos indígenas de contacto en el Río de la Plata.",
+									"La reconstrucción del pasado indígena a través de testimonios materiales y su contexto.",
+									"América y Europa en el siglo XV.",
+									"Los procesos de aculturación de los aborígenes platenses.",
+									"La sociedad colonial narrada por cronistas y viajeros.",
+									"La periodización temporal: siglos."];
+		var contenidosGeografia = ["El Uruguay en la Cuenca del Plata.",
+									"La protección de los recursos edáficos e hídricos.",
+									"Las actividades productivas e industriales a nivel nacional y en la Cuenca.",
+									"La organización de los territorios en ciudades. Los vínculos urbano-rurales en nuestro país.",
+									"La población en el Uruguay.",
+									"Los elementos del tiempo atmosférico y sus características en el Uruguay.",
+									"Las tecnologías en la transformación de las actividades agrícolas nacionales."];
+		var contenidosEtica = ["La relación entre verdad y discurso en creencias y tradiciones.",
+								"La relación entre identidad y etnia en la construcción de la identidad nacional.",
+								"La mujer y el hombre a través de la historia en el Uruguay.", 
+								"Los medios de comunicación y la incitación al consumo.", 
+								"La actitud violenta como respuesta a otra actitud violenta."];
+		var contenidosDerecho = ["El Derecho a la Educación.",
+								"El Derecho a la libertad de cultos. Los Derechos de los consumidores.",
+								"El derecho a la protección social.",
+								"El gobierno departamental.",
+								"Las normas de circulación en el tránsito para conductores de diferentes medios de transporte.",
+								"La mediación como forma de resolución de conflictos."];
+
+$(document).ready(function () {
+      $('select').selectize({
+          sortField: 'text'
+      });
+  });
+	</script>
+</body>
+</html>
